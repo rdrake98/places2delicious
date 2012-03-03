@@ -1,0 +1,12 @@
+places:
+    path: /Users/YourUser/Library/Application Support/Firefox/Profiles/YourProfile/places.sqlite
+    not-shared-tag: private
+delicious:
+    api:
+        url: api.del.icio.us
+        port: 443
+    account:
+        username: user
+        password: password
+    import-stats: false
+    import-tag: places2delicious

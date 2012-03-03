@@ -1,3 +1,12 @@
 places2delicious
 ----------------
 
+This Ruby script exports bookmarks from Firefox >3.x places.sqlite to Delicious.
+
+The YAML places2delicious.yml property file must be updated with:
+- the full path to your Firefox places database file
+- your Delicious username and password.
+
+You may specify a specific tag to import when calling the Ruby script.
+
+./places2delicious.rb tag

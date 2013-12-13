@@ -1,6 +1,15 @@
 places2delicious
 ----------------
 
+sqlite3 is not loading the database anymore.
+I am getting an error: in `initialize': wrong argument type nil (expected Hash) (TypeError)
+I will try with Ruby 2.0.0.
+
+Anyway, who needs to upload their Firefox bookmarks to Delicious?
+You should all be using Pinboard.in!
+
+----------------
+
 This Ruby script exports bookmarks from Firefox >3.x places.sqlite to Delicious.
 
 The YAML places2delicious.yml property file must be updated with:

@@ -6,6 +6,7 @@ require 'net/https'
 require 'rexml/document'
 require 'uri'
 require 'Bookmark'
+require 'yaml'
 
 =begin
 * Name: places2delicious

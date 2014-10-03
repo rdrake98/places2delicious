@@ -5,7 +5,7 @@ require 'sqlite3'
 require 'net/https'
 require 'rexml/document'
 require 'uri'
-require 'Bookmark'
+require_relative 'Bookmark'
 require 'yaml'
 
 =begin
@@ -56,11 +56,11 @@ module Places2delicious
           LEFT OUTER JOIN moz_bookmarks tag on bt.parent = tag.id
           LEFT OUTER JOIN moz_bookmarks tag_parent on tag.parent = tag_parent.id
           LEFT OUTER JOIN moz_items_annos anno on bookmark.id = anno.item_id AND anno.anno_attribute_id = 2
+          AND tag_parent.title = 'Tags'
           
           WHERE  place.id = bookmark.fk
           AND bookmark.title is not null
-          AND bookmark.type = 1
-          AND tag_parent.title = 'Tags'"
+          AND bookmark.type = 1"
           
           # Execute the query
           db.execute(query) do |row|
@@ -76,7 +76,7 @@ module Places2delicious
             if bookmark.nil?
               bookmarks[array] = Bookmark::Bookmark.new(title, url, [tag], description, visitCount, frecency) # Create the Bookmark
             else
-              bookmark.tags.push(tag) # Add the to the bookmark
+              bookmark.tags.push(tag) # Add the tags to the bookmark
             end
           end
           

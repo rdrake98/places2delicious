@@ -7,6 +7,8 @@ require 'rexml/document'
 require 'uri'
 require_relative 'Bookmark'
 require 'yaml'
+require 'netrc'
+require 'inifile'
 
 =begin
 * Name: places2delicious
@@ -14,7 +16,7 @@ require 'yaml'
 * Author: Nicolas Meier
 * Creation Date: 2009-02-06
 * License: All Rights Reserved, Copyright © Nicolas Meier
-* Version 1.1 2009-02-06
+* Version 1.2 2014-10-05
 =end
 
 class Net::HTTP
@@ -29,13 +31,33 @@ end
 module Places2delicious
     class Places2delicious
       CONFIG = YAML.load_file("places2delicious.yml")
+      n = Netrc.read
     
-      @@pathToPlaces = CONFIG["places"]["path"]
+      # Get current user
+      currentUser = (%x(echo $USER)).delete("\n")
+      # Path to Firefox data and profiles.ini
+      pathToFirefox = "/Users/" + currentUser + "/Library/Application Support/Firefox/"
+      pathToProfilesIni = pathToFirefox + "profiles.ini"
+      
+      # Load profiles.ini file
+      file = IniFile.load(pathToProfilesIni)
+      
+      # Get the profile and its path
+      iniProfile = file["Profile" + CONFIG["places"]["profile-number"].to_s]
+      profilePath = iniProfile["Path"]
+      isRelative = iniProfile["IsRelative"]
+      if isRelative
+        pathProfile = pathToFirefox + profilePath
+      else
+        pathProfile = profilePath
+      end
+      
+      @@pathToPlaces = pathProfile + "/places.sqlite"
       @@notSharedTag = CONFIG["places"]["not-shared-tag"]
       @@apiUrl = CONFIG["delicious"]["api"]["url"]
       @@apiPort = CONFIG["delicious"]["api"]["port"]
-      @@username = CONFIG["delicious"]["account"]["username"]
-      @@password = CONFIG["delicious"]["account"]["password"]
+      # Get delicious username and password from .netrc
+      @@username, @@password = n["delicious.com"]
 
       def initialize
       end
@@ -58,7 +80,7 @@ module Places2delicious
           LEFT OUTER JOIN moz_items_annos anno on bookmark.id = anno.item_id AND anno.anno_attribute_id = 2
           AND tag_parent.title = 'Tags'
           
-          WHERE  place.id = bookmark.fk
+          WHERE place.id = bookmark.fk
           AND bookmark.title is not null
           AND bookmark.type = 1"
           

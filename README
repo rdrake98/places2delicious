@@ -1,6 +1,8 @@
 places2delicious
 ----------------
 
+* Now reading delicious username and password from .netrc. You need to add a delicious.com entry in .netrc.
+* Now retrieving places database path from profiles.ini Firefox file. You can define the profile number in places2delicious.yml.
 * Working again: query fixed and require_relative for "Bookmark".
 * Tested with Ruby 2.1.3
 

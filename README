@@ -1,8 +1,8 @@
 places2delicious
 ----------------
 
-Working again: query fixed and require_relative for "Bookmark".
-Tested with Ruby 2.1.3
+* Working again: query fixed and require_relative for "Bookmark".
+* Tested with Ruby 2.1.3
 
 Anyway, who needs to upload their Firefox bookmarks to Delicious?
 You should all be using Pinboard.in!

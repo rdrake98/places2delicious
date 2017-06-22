@@ -1,10 +1,3 @@
-require 'net/https'
-require 'rexml/document'
-require 'uri'
-require 'yaml'
-
-CONFIG = YAML.load_file("places2delicious.yml")
-
 class Bookmark
   VISIT_COUNT_SYMBOL = :"♞"
   FRECENCY_SYMBOL =  :"♚"

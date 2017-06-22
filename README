@@ -1,22 +1,7 @@
 places2delicious
 ----------------
 
-* Now reading delicious username and password from .netrc. You need to add a delicious.com entry in .netrc.
-* Now retrieving places database path from profiles.ini Firefox file. You can define the profile number in places2delicious.yml.
-* Working again: query fixed and require_relative for "Bookmark".
-* Tested with Ruby 2.1.3
-
-Anyway, who needs to upload their Firefox bookmarks to Delicious?
-You should all be using Pinboard.in!
-
-----------------
-
-This Ruby script exports bookmarks from Firefox >3.x places.sqlite to Delicious.
-
-The YAML places2delicious.yml property file must be updated with:
-- the full path to your Firefox places database file
-- your Delicious username and password.
-
-You may specify a specific tag to import when calling the Ruby script.
-
-./places2delicious.rb tag
+Quick hack to get some info out of Firefox bookmarks
+Original Copyright © Nicolas Meier. Thanks!
+Working with Ruby 2.4.1
+No longer writing to Delicious or using YAML

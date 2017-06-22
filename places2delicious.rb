@@ -6,10 +6,8 @@ require_relative 'Bookmark'
 
 class Places2delicious
   pathToFirefox = "/Users/rd/Library/Application Support/Firefox/"
-  file = IniFile.load(pathToFirefox + "profiles.ini")
-  iniProfile = file["Profile#{ARGV[0]}"]
-  pathProfile = iniProfile["Path"]
-  pathProfile = pathToFirefox + pathProfile if iniProfile["IsRelative"]
+  ini = IniFile.load(pathToFirefox + "profiles.ini")
+  pathProfile = pathToFirefox + ini["Profile#{ARGV[0]}"]["Path"]
   @@pathToPlaces = pathProfile + "/places.sqlite"
 
   def retrieveBookmarks

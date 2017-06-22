@@ -11,10 +11,8 @@ class Places2delicious
   @@pathToPlaces = pathProfile + "/places.sqlite"
 
   def retrieveBookmarks
-    bookmarks = {}
-    # Open the places SQLite database
+    bookmarks = []
     db = SQLite3::Database.open(@@pathToPlaces)
-
     # Query - Retrieve bookmarks associated to a place and to tags
     query = "SELECT bookmark.title, place.url, place.title, tag.title, anno.content,
     place.visit_count, place.frecency
@@ -31,30 +29,18 @@ class Places2delicious
     AND bookmark.title is not null
     AND bookmark.type = 1"
 
-    # Execute the query
     db.execute(query) do |row|
-      title = row[0]              # Bookmark title
-      url = row[1]                # Place url
-      tag = row[3]                # Bookmark tags
-      description = row[4]        # Description
-      visitCount = row[5].to_f    # Visit count
-      frecency = row[6].to_f      # Frecency
-
-      array = [title, url]
-      bookmark = bookmarks[array]
-      if bookmark.nil?
-        bookmarks[array] = Bookmark.new(title, url, [tag], description, visitCount, frecency)
-      else
-        bookmark.tags.push(tag) # Add the tags to the bookmark
-      end
+      title = row[0]
+      url = row[1]
+      tag = row[3]
+      description = row[4]
+      visitCount = row[5].to_f
+      frecency = row[6].to_f
+      bookmarks << Bookmark.new(title, url, [tag], description, visitCount, frecency)
     end
-
-    # Close the database connection
     db.close
-
     bookmarks
   end
 end
-instance = Places2delicious.new
-bookmarks = instance.retrieveBookmarks
+bookmarks = Places2delicious.new.retrieveBookmarks
 puts bookmarks.size

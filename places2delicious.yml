@@ -1,9 +1,3 @@
 places:
     not-shared-tag: private
-    profile-number: 0
-delicious:
-    api:
-        url: api.del.icio.us
-        port: 443
-    import-stats: false
-    import-tag: places2delicious
+    profile-number: 32
